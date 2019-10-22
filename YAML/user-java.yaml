@@ -14,7 +14,22 @@ spec:
       - name: user-java
         image: registryuGf9246.azurecr.io/tripinsights/user-java:1.0
         ports:
-        - containerPort: 8080
+        - containerPort: 80
+        env:
+          - name: SQL_SERVER
+            value: "sqlserverugf9246.database.windows.net"
+          - name: SQL_DBNAME
+            value: "mydrivingDB"
+          - name: SQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: db-secret
+                key: username
+          - name: SQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: db-secret
+                key: password
 ---
 apiVersion: v1
 kind: Service
@@ -25,6 +40,6 @@ spec:
     app: user-java
   ports:
     - protocol: TCP
-      port: 8080
-      targetPort: 8080
+      port: 80
+      targetPort: 80
   type: ClusterIP
