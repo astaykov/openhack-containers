@@ -9,7 +9,7 @@ services:
     networks:
     - backend
   web:
-    build: ../dockerfiles/Dockerfile_0
+    build: ../dockerfiles/Dockerfile_3
     environment:
       - PORT=8080
       - SQL_USER=sa
