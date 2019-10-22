@@ -14,7 +14,7 @@ spec:
         app: tripviewer
     spec:
       containers:
-      - name: node
+      - name: tripviewer
         imagePullPolicy: Always
         image: "registryugf9246.azurecr.io/tripinsights/tripviewer:1.0"
         env:
