@@ -28,6 +28,9 @@ spec:
           value: sqlserverugf9246.database.windows.net
         - name: SQL_DBNAME
           value: mydrivingDB
+        ports:
+        - containerPort: 80
+          protocol: TCP
 ---
 apiVersion: v1
 kind: Service
