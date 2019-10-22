@@ -17,7 +17,7 @@ spec:
         - containerPort: 80
         env:
           - name: SQL_SERVER
-            value: "changeme.database.windows.net"
+            value: "sqlserverugf9246.database.windows.net"
           - name: SQL_DBNAME
             value: "mydrivingDB"
           - name: SQL_USER
