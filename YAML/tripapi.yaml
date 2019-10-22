@@ -16,34 +16,22 @@ spec:
         name: tripapi
         env:
           # Use secret in real usage
-        - name: MYSQL_ROOT_PASSWORD
-          value: password
         - name: SQL_USER
           value: sqladminuGf9246
         - name: SQL_PASSWORD
           value: 8F4030Vk3
         - name: SQL_SERVER
-          ="changeme.database.windows.net" \
-    OPENAPI_UI_URI="http://changeme" \
-    DEBUG_LOGGING="false"
+          value: sqlserverugf9246.database.windows.net
         ports:
-        - containerPort: 3306
-          name: mysql
-        volumeMounts:
-        - name: mysql-persistent-storage
-          mountPath: /var/lib/mysql
-      volumes:
-      - name: mysql-persistent-storage
-        persistentVolumeClaim:
-          claimName: mysql-pv-claim
+        - containerPort: 80
+          name: tripapi
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql
+  name: tripapi
 spec:
   ports:
-  - port: 3306
+  - port: 80
   selector:
-    app: mysql
-  clusterIP: None
+    app: tripapi
