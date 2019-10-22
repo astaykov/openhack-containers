@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user
+  labels:
+    app: user
+spec:
+  selector:
+    matchLabels:
+      app: user
+  template:
+    metadata:
+      labels:
+        app: user
+    spec:
+      containers:
+      - name: node
+        imagePullPolicy: Always
+        image: "registryugf9246.azurecr.io/tripinsights/userprofile:1.0"
+        env:
+        - name: PORT
+          value: "80"
+        - name: SQL_USER
+          value: sqladminuGf9246
+        - name: SQL_PASSWORD
+          value: 8F4030Vk3
+        - name: SQL_SERVER
+          value: sqlserverugf9246.database.windows.net
+        - name: SQL_DBNAME
+          value: mydrivingDB
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user
+  labels:
+    app: user
+spec:
+  ports:
+  - port: 80
+    name: http
+  selector:
+    app: user
