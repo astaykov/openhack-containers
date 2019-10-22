@@ -15,3 +15,16 @@ spec:
         image: registryuGf9246.azurecr.io/tripinsights/user-java:1.0
         ports:
         - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-java-service
+spec:
+  selector:
+    app: user-java
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
