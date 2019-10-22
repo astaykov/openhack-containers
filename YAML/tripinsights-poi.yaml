@@ -19,7 +19,7 @@ spec:
       containers:
         - name: tripinsights-poi
           image: registryugf9246.azurecr.io/tripinsights/poi:1.0
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
               protocol: TCP
