@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    environment:
+    - SA_PASSWORD=yourStrong(!)Password
+    - ACCEPT_EULA=Y
+    networks:
+    - backend
+  web:
+    build: ../dockerfiles/Dockerfile_0
+    environment:
+      - PORT=8080
+      - SQL_USER=sa
+      - SQL_PASSWORD=yourStrong(!)Password
+      - SQL_SERVER=db
+      - SQL_DBNAME="mydrivingDB"
+    networks:
+    - backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+networks:
+  backend:
