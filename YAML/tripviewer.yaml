@@ -19,9 +19,9 @@ spec:
         image: "registryugf9246.azurecr.io/tripinsights/tripviewer:1.0"
         env:
           - name: USER_API_ENDPOINT
-            value: "user.default.svc.cluster.local"
+            value: "http://user.default.svc.cluster.local"
           - name: TRIPS_API_ENDPOINT
-            value: "tripapi.default.svc.cluster.local"
+            value: "http://tripapi.default.svc.cluster.local"
 ---
 apiVersion: v1
 kind: Service
