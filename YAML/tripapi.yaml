@@ -38,3 +38,22 @@ spec:
   - port: 80
   selector:
     app: tripapi
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  namespace: api
+  name: tripapi-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /api/trips
+        backend:
+          serviceName: tripapi
+          servicePort: 80
+      - path: /api/docs/trips
+        backend:
+          serviceName: tripapi
+          servicePort: 80
+

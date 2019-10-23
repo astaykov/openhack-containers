@@ -20,9 +20,9 @@ spec:
         image: "registryugf9246.azurecr.io/tripinsights/tripviewer:1.0"
         env:
           - name: USER_API_ENDPOINT
-            value: "http://user.default.svc.cluster.local"
+            value: "http://user.api.svc.cluster.local"
           - name: TRIPS_API_ENDPOINT
-            value: "http://tripapi.default.svc.cluster.local"
+            value: "http://tripapi.api.svc.cluster.local"
 ---
 apiVersion: v1
 kind: Service
@@ -37,3 +37,20 @@ spec:
     name: http
   selector:
     app: tripviewer
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  namespace: web
+  name: tripviewer-ingress
+  labels:
+    app: tripviewer
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: tripviewer
+          servicePort: 80
+

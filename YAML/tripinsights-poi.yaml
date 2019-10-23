@@ -42,8 +42,27 @@ metadata:
 spec:
   selector:
     app: tripinsights-poi
-  type: NodePort
+  type: ClusterIP
   ports:
     - name: tripinsights-poi
       port: 8080
       targetPort: 80
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  namespace: api
+  name: tripinsights-poi-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /api/poi
+        backend:
+          serviceName: tripinsights-poi
+          servicePort: 80
+      - path: /api/docs/poi
+        backend:
+          serviceName: tripinsights-poi
+          servicePort: 80
+

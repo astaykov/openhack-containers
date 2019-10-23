@@ -46,3 +46,21 @@ spec:
       port: 80
       targetPort: 80
   type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  namespace: api
+  name: user-java-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /api/user-java
+        backend:
+          serviceName: user-java-service
+          servicePort: 80
+      - path: /api/docs/user-java
+        backend:
+          serviceName: user-java-service
+          servicePort: 80
