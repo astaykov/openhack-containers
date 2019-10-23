@@ -1,0 +1,27 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: team9-cluster-admins
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: hacker6hs6@OTAPRD1131ops.onmicrosoft.com
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: hacker1bic@OTAPRD1131ops.onmicrosoft.com	
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: hacker2mnc@OTAPRD1131ops.onmicrosoft.com	
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: hacker3v72@OTAPRD1131ops.onmicrosoft.com
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: hacker44ot@OTAPRD1131ops.onmicrosoft.com
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: hacker5wh6@OTAPRD1131ops.onmicrosoft.com
