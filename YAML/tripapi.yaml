@@ -2,6 +2,7 @@ apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
   name: tripapi
+  namespace: api
 spec:
   selector:
     matchLabels:
@@ -31,6 +32,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: tripapi
+  namespace: api
 spec:
   ports:
   - port: 80
