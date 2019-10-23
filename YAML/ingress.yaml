@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ingress
+
+
+
+#helm install stable/nginx-ingress \
+#    --namespace ingress \
+#    --set controller.replicaCount=2 \
+#    --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux \
+#    --set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux

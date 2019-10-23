@@ -58,7 +58,7 @@ az aks create \
     --resource-group teamResources \
     --name team9 \
     --network-plugin azure \
-    --vnet-subnet-id /subscriptions/87bf97a9-e035-4c77-b8a5-c6697ef853e2/resourceGroups/teamResources/providers/Microsoft.Network/virtualNetworks/vnet/subnets/aks-subnet \
+    --vnet-subnet-id /subscriptions/87bf97a9-e035-4c77-b8a5-c6697ef853e2/resourceGroups/teamResources/providers/Microsoft.Network/virtualNetworks/vnet/subnets/aks-team9 \
     --docker-bridge-address 172.17.0.1/16 \
     --dns-service-ip 10.0.0.10 \
     --service-cidr 10.0.0.0/24 \
