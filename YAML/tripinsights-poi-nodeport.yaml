@@ -1,0 +1,47 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: tripinsights-poi
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: tripinsights-poi
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+        - name: tripinsights-poi
+          image: registryugf9246.azurecr.io/tripinsights/poi:1.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          env:
+          - name: SQL_SERVER
+            value: "sqlserverugf9246.database.windows.net"
+          - name: SQL_DBNAME
+            value: "mydrivingDB"
+          - name: SQL_USER
+            value: "sqladminuGf9246"
+          - name: SQL_PASSWORD
+            value: "8F4030Vk3"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: tripinsights-poi
+spec:
+  selector:
+    app: tripinsights-poi
+  type: NodePort
+  ports:
+    - name: tripinsights-poi
+      port: 8080
+      targetPort: 80
