@@ -43,3 +43,23 @@ spec:
     name: http
   selector:
     app: user
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  namespace: api
+  name: user-ingress
+  labels:
+    app: user
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /api/user
+        backend:
+          serviceName: user
+          servicePort: 80
+      - path: /api/docs/user
+        backend:
+          serviceName: user
+          servicePort: 80
