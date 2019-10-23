@@ -1,6 +1,7 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
+  namespace: api
   name: user-java-deployment
 spec:
   replicas: 1
