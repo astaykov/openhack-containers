@@ -17,21 +17,27 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 80
-        env:
-          - name: SQL_SERVER
-            value: "sqlserverugf9246.database.windows.net"
-          - name: SQL_DBNAME
-            value: "mydrivingDB"
-          - name: SQL_USER
-            valueFrom:
-              secretKeyRef:
-                name: db-secret
-                key: username
-          - name: SQL_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: db-secret
-                key: password
+        volumeMounts:
+        - name: secrets
+          mountPath: /secrets
+          readOnly: true
+      volumes:
+      - name: secrets
+        flexVolume:
+          driver: "azure/kv"
+          options:
+            usevmmanagedidentity: "true"             # [OPTIONAL new in version >= v0.0.15] if not provided, will default to "false"
+            keyvaultname: "team9kv"              # [REQUIRED] the name of the KeyVault
+            keyvaultobjectnames: "SQL-SERVER;SQL-USER;SQL-PASSWORD;SQL-DBNAME"         # [REQUIRED] list of KeyVault object names (semi-colon separated)
+            keyvaultobjectaliases: "SQL_SERVER;SQL_USER;SQL_PASSWORD;SQL_DBNAME"      # [OPTIONAL] list of KeyVault object aliases
+            keyvaultobjecttypes: "secret;secret;secret;secret"             # [REQUIRED] list of KeyVault object types: secret, key, cert
+            tenantid: "2319eb5c-74f4-4d16-b289-50003acf58fb"                    # [REQUIRED] the tenant ID of the KeyVault
+
+#az keyvault secret set --name --value sqlserverugf9246.database.windows.net --vault-name team9kv
+#az keyvault secret set --name  --value sqladminuGf9246 --vault-name team9kv
+#az keyvault secret set --name  --value 8F4030Vk3 --vault-name team9kv
+#az keyvault secret set --name  --value mydrivingDB --vault-name team9kv
+
 ---
 apiVersion: v1
 kind: Service
