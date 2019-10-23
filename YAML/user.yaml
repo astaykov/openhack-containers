@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: api
   name: user
   labels:
     app: user
@@ -32,6 +33,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: api
   name: user
   labels:
     app: user
