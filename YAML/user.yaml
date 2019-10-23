@@ -11,6 +11,9 @@ spec:
       app: user
   template:
     metadata:
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/schme: 'http'
       labels:
         app: user
     spec:
