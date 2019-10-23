@@ -11,7 +11,7 @@ spec:
     metadata:
       annotations:
         prometheus.io/scrape: 'true'
-        prometheus.io/schme: 'http'
+        prometheus.io/scheme: 'http'
         prometheus.io/port: '80'
       labels:
         app: tripapi
