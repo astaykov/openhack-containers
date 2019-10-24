@@ -1,8 +1,7 @@
 ---
 resources:
 - deployment.yaml
-- route.yaml
 - service.yaml
 - pvc.yaml
 
-namespace: default
+namespace: grafana
