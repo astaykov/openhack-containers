@@ -9,4 +9,5 @@ metadata:
 #    --namespace ingress \
 #    --set controller.replicaCount=2 \
 #    --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux \
-#    --set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux
+#    --set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux \
+#    --set controller.metrics.enabled=true
