@@ -66,7 +66,10 @@ az ad app permission add --id $clientApplicationId --api $serverApplicationId --
 sleep 20
 echo add permission grant to the client app
 az ad app permission grant --id $clientApplicationId --api $serverApplicationId
-
+export aksname=team9sec
+export serverApplicationId=37764a51-54e7-43ec-8fed-77d88feed907
+export serverApplicationSecret='@?1nA?kUQ[7gTXN8D2A?zOKsyba94nm/'
+export clientApplicationId=cb1626f5-5b6b-40bb-903c-0b708e50a9d0
 
 az aks create \
     --resource-group teamResources \
@@ -74,8 +77,8 @@ az aks create \
     --network-plugin azure \
     --vnet-subnet-id /subscriptions/87bf97a9-e035-4c77-b8a5-c6697ef853e2/resourceGroups/teamResources/providers/Microsoft.Network/virtualNetworks/vnet/subnets/aks-subnet \
     --docker-bridge-address 172.17.0.1/16 \
-    --dns-service-ip 10.0.0.10 \
-    --service-cidr 10.0.0.0/24 \
+    --dns-service-ip 192.168.0.10 \
+    --service-cidr 192.168.0.0/24 \
     --generate-ssh-keys \
     --node-count 3 \
     --attach-acr registryuGf9246 \
@@ -86,3 +89,6 @@ az aks create \
     --aad-tenant-id 2319eb5c-74f4-4d16-b289-50003acf58fb \
     --enable-addons monitoring \
     --network-policy azure
+
+
+echo Do not forget to install flexvol to the cluster: kubectl create -f https://raw.githubusercontent.com/Azure/kubernetes-keyvault-flexvol/master/deployment/kv-flexvol-installer.yaml
