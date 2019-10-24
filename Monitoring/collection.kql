@@ -1,0 +1,91 @@
+InsightsMetrics
+| where Namespace == "container.azm.ms/prometheus" 
+| where _ResourceId == "/subscriptions/87bf97a9-e035-4c77-b8a5-c6697ef853e2/resourcegroups/teamresources/providers/microsoft.containerservice/managedclusters/team9"
+| order by TimeGenerated desc
+
+InsightsMetrics
+| extend tags=parse_json(Tags)
+| where tags.app == "user" 
+| summarize count() by tostring(tags.app)
+
+InsightsMetrics
+| extend tags=parse_json(Tags)
+| summarize count() by tostring(tags.app)
+
+InsightsMetrics
+| extend tags=parse_json(Tags)
+| summarize count() by tostring(tags.app), toint(tags.code)
+
+Potential avenue for locking down that metrics endpoint: https://kubernetes.github.io/ingress-nginx/user-guide/default-backend/
+
+app=nginx-ingress
+
+sample queries ....
+
+https://docs.microsoft.com/en-us/azure/azure-monitor/insights/container-insights-log-search#search-logs-to-analyze-data
+
+nginx_ingress_controller_nginx_process_requests_total
+
+Perf | where ObjectName == "K8SContainer" and CounterName == "memoryRssBytes" | summarize AvgUsedRssMemoryBytes = avg(CounterValue) by bin(TimeGenerated, 30m), name=extract("/([^/]+)$", 1, InstanceName)
+
+here is the query fpr the requests coming in:
+
+
+InsightsMetrics
+| where Namespace == "prometheus" 
+| extend tags=parse_json(Tags)
+| extend app=tostring(tags.app)
+| extend code=toint(tags.code) 
+| where app == 'nginx-ingress' 
+| where Name == 'http_requests_received_total'
+| summarize sum(Val) by code, bin(TimeGenerated,5m)
+
+alias ske='kubectl --kubeconfig ~/.kube/ske'
+
+https://github.com/denniszielke/container_demos/blob/master/OMSAKS.md
+
+ContainerInventory
+| where Image contains "insurance" and TimeGenerated > ago(10m) and ContainerState == "Failed"
+| summarize AggregatedValue = dcount(ContainerID) by Computer, Image, ContainerState
+
+https://docs.microsoft.com/en-us/azure/azure-monitor/insights/container-insights-alerts
+
+let startDateTime = datetime('2019-10-24T02:30:00.000Z');
+let endDateTime = datetime('2019-10-24T08:34:40.202Z');
+let ContainerIdList = KubePodInventory
+| where TimeGenerated >= startDateTime and TimeGenerated < endDateTime
+| where ContainerName =~ '57dc5d63-f633-11e9-92dd-e600f56be5e5/insurance'
+| where ClusterId =~ '/subscriptions/87bf97a9-e035-4c77-b8a5-c6697ef853e2/resourceGroups/teamResources/providers/Microsoft.ContainerService/managedClusters/team9'
+| distinct ContainerID;
+ContainerLog
+| where TimeGenerated >= startDateTime and TimeGenerated < endDateTime
+| where ContainerID in (ContainerIdList)
+| project LogEntrySource, LogEntry, TimeGenerated, Computer, Image, Name, ContainerID
+| order by TimeGenerated desc
+| render table
+
+Here's some useful tooling for reviewing Kubernetes access: https://github.com/corneliusweig/rakkess
+
+https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+fsGroup:2000
+this will add the group 2000 to your executing user and every file mount will have the group 2000 as group ownership
+
+
+Kubectl JSONpath info (manuel_stefan.ganter (Guest)): 
+ 
+Example: k get rs -o jsonpath="{@.items[?(@.status.readyReplicas==1)].metadata.name}"
+ 
+
+Doc: https://kubernetes.io/docs/reference/kubectl/jsonpath/
+
+    
+
+kubectl wait --for=completed --timeout=60s pod/testjob
+
+    
+Blog with script examples: https://blog.gripdev.xyz/2018/10/19/kubernetes-integration-testing-minikube-azure-pipelines-happy/
+Kubernetes Integration Testing: MiniKube + Azure Pipelines = HappyI recently did some work on a fairly simple controller to run inside Kubernetes.
+ It connects to the K8s API and watches for changes to ingress objects in the cluster. 
+
+https://kubernetes.io/docs/concepts/services-networking/network-policies/#default-deny-all-ingress-traffic
+
