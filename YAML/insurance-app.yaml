@@ -19,6 +19,8 @@ spec:
       - image: "registryugf9246.azurecr.io/insurance:1.0"
         imagePullPolicy: Always
         name: insurance
+        args: 
+        - --disable-files
         ports:
         - containerPort: 8081
           name: http
